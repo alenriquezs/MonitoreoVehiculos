@@ -24,7 +24,7 @@ class Rastreador:
             for id, pt in self.centro_puntos.items():
                 dist = math.hypot(cx - pt[0], cy - pt[1])
 
-                if dist < 25:
+                if dist < 30:
                     self.centro_puntos[id] = (cx, cy)
                     print(self.centro_puntos)
                     objetos_id.append([x, y, w, h, id])

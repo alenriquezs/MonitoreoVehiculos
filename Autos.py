@@ -1,5 +1,30 @@
 import cv2
+import json
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+
 from Rastreador import *
+
+# Fetch the service account key JSON file contents
+cred = credentials.Certificate('monitoreovehiculos-integradora-firebase-adminsdk-qtgpm-9883be3791.json')
+
+# Initialize the app with a service account, granting admin privileges
+default_app = firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://monitoreovehiculos-integradora-default-rtdb.firebaseio.com/'
+})
+
+ref = db.reference("/")
+
+# Borrar base de datos existente (contenido basura /datos de prueba/)
+ref.set('null')
+
+# Escritura de datos de prueba en base de datos
+# with open("book_info.json", "r") as f:
+# 	file_contents = json.load(f)
+# ref.set(file_contents)
+#
+# print(ref.get())
 
 # --Vamos a crear un objeto de seguimiento----
 seguimiento = Rastreador()
@@ -46,8 +71,8 @@ while True:
     cv2.imshow("Carretera", frame)
     cv2.imshow("Mascara", mascara)
 
-    key = cv2.waitKey(25)
-    if key == 100:
+    key = cv2.waitKey(5)
+    if key == 27:
         break
 
 cap.release()
